@@ -10,6 +10,11 @@ def main():
 
     bridge = CvBridge()
     cv_image = bridge.imgmsg_to_cv2(img, desired_encoding='passthrough')
+    color = cv_image[360,640]
+
+    f = open("flag_color.txt", "w")
+    f.write(color)
+    f.close()
 
     #detect the color of the image
     #save to file the three part array/coordinates

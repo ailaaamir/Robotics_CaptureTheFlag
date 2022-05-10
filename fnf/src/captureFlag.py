@@ -18,10 +18,18 @@ class car:
     def im_cb(self, img):
 
         #have to write seperate code that determines color and can set that as the flag color that we are trying to recognize
+        f = open("flag_color.txt", "r")
+        rgb_color = f.read()
+        color = np.uint8(rgb_color)
+        hsv_color = cv2.cvtColor(color, cv2.COLOR_BGR2HSV)
+        hue = hsv_color[0][0][0]
+        lower = np.array([str(hue-10)][100][100])
+        upper = np.array([str(hue+10)][255][255])
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        lower = np.array([78,158,124])
-        upper = np.array([138,255,255])
+
+        #lower = np.array([78,158,124])
+        #upper = np.array([138,255,255])
         mask = cv2.inRange(hsv,lower,upper)
         segment = cv2.bitwise_and(imge, imge, mask=mask)
         contours, hierarchy = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
