@@ -5,10 +5,6 @@
   <!-- Set to 1 if you want to run the map_server -->
   <arg name="map_server" value = "1" />
 
-  <!-- Launch  map server-->
-  <group if="$(arg map_server)">
-  	<include file="$(find mushr_base)/launch/includes/map_server.launch" />
-  </group>
 
   <!-- Could be racecar-mit, racecar-uw-tx2, or racecar-uw-nano -->
   <arg name="racecar_version" default="racecar-uw-nano" />
@@ -32,17 +28,12 @@
         <include file="$(find ackermann_cmd_mux)/launch/mux.launch" />
     </group>
 
-    <include file="$(find mushr_hardware)/launch/$(arg racecar_version)/sensors.launch" >
-        <arg name="racecar_version" value="$(arg racecar_version)" />
-        <arg name="tf_prefix" value="$(arg car_name)" />
-        <arg name="car_name" default="$(arg car_name)" />
-    </include>
 
     <include file="$(find jetson_csi_cam)/jetson_csi_cam.launch" >
         <arg name="width" value="1280"/>
         <arg name="height" value="720"/>
     </include>
-    <node pkg= "fnf" type ="captureFlag.py" name="node" />
+    <node pkg= "fnf" type ="captureFlag.py" name="cptfnode" output="screen"/>
 
 
   </group>
